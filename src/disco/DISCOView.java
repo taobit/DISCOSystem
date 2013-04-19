@@ -4,6 +4,7 @@
 
 package disco;
 
+import javax.swing.event.ListSelectionListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -15,11 +16,13 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  * The application's main frame.
  */
-public class DISCOView extends FrameView {
+public class DISCOView extends FrameView implements ListSelectionModel{
 
     public DISCOView(SingleFrameApplication app) {
         super(app);
@@ -113,6 +116,10 @@ public class DISCOView extends FrameView {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -123,9 +130,6 @@ public class DISCOView extends FrameView {
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
@@ -142,11 +146,16 @@ public class DISCOView extends FrameView {
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Choice", "Reword", "Controlbox", "Item 4", "" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         jList1.setName("jList1"); // NOI18N
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
@@ -165,7 +174,7 @@ public class DISCOView extends FrameView {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 436, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,6 +193,18 @@ public class DISCOView extends FrameView {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.setName("jComboBox2"); // NOI18N
 
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
+
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setName("jButton5"); // NOI18N
+
+        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setName("jButton6"); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -197,9 +218,22 @@ public class DISCOView extends FrameView {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jButton1))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(24, 24, 24))
+                        .addContainerGap())
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,14 +264,29 @@ public class DISCOView extends FrameView {
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                        .addComponent(jButton5))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton6))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jButton2.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton2.AccessibleContext.accessibleName")); // NOI18N
 
         menuBar.setName("menuBar"); // NOI18N
 
@@ -271,27 +320,12 @@ public class DISCOView extends FrameView {
 
         progressBar.setName("progressBar"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setName("jButton5"); // NOI18N
-
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addGap(47, 47, 47)
+                .addGap(394, 394, 394)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                     .addComponent(statusMessageLabel))
@@ -305,28 +339,22 @@ public class DISCOView extends FrameView {
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
                 .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(statusMessageLabel)
-                            .addComponent(statusAnimationLabel)
-                            .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton5))
-                        .addContainerGap())))
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusMessageLabel)
+                    .addComponent(statusAnimationLabel)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3))
         );
-
-        jButton2.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton2.AccessibleContext.accessibleName")); // NOI18N
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jList1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -334,6 +362,7 @@ public class DISCOView extends FrameView {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -359,4 +388,84 @@ public class DISCOView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+
+    public void setSelectionInterval(int arg0, int arg1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void addSelectionInterval(int arg0, int arg1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void removeSelectionInterval(int arg0, int arg1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getMinSelectionIndex() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getMaxSelectionIndex() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isSelectedIndex(int arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getAnchorSelectionIndex() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setAnchorSelectionIndex(int arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getLeadSelectionIndex() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setLeadSelectionIndex(int arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void clearSelection() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isSelectionEmpty() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void insertIndexInterval(int arg0, int arg1, boolean arg2) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void removeIndexInterval(int arg0, int arg1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setValueIsAdjusting(boolean arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean getValueIsAdjusting() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setSelectionMode(int arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getSelectionMode() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void addListSelectionListener(ListSelectionListener arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void removeListSelectionListener(ListSelectionListener arg0) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

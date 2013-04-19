@@ -14,6 +14,11 @@ import com.phidgets.event.*;
  */
 public class DISCOApp extends SingleFrameApplication {
 
+    static InterfaceKitPhidget ik;
+    static AttachListener attachHandler;
+    static DetachListener detachHandler;
+    static int serialNumber;
+    static String name;
     /**
      * At startup create and show the main frame of the application.
      */
@@ -36,13 +41,52 @@ public class DISCOApp extends SingleFrameApplication {
     public static DISCOApp getApplication() {
         return Application.getInstance(DISCOApp.class);
     }
-
+    
+    
+    
+//------------------------------------------------------------------------------
     /**
      * Main method launching the application.
      */
-    public static void main(String[] args) {
+    public static final void main(String[] args) throws Exception {
         launch(DISCOApp.class, args);
+        ik = new InterfaceKitPhidget();
+        serialNumber = 0;
+        name = new String();
+        connectBox();
+        controlBox();
+        detachBox();
+        
     }
     
+    public static void printtoButton(String input){
+        
+    }
+
+    public static void connectBox(){
+        attachHandler = new AttachListener() {
+            public void attached(AttachEvent event) {
+                try {
+                    serialNumber = ((Phidget)event.getSource()).getSerialNumber();
+                    name = ((Phidget)event.getSource()).getDeviceName();
+                } catch (PhidgetException exception) {
+                    printError(exception.getErrorNumber(), exception.getDescription());
+                }
+
+                System.out.println("Hello Device " + name + ", Serial Number: " + Integer.toString(serialNumber));
+            }
+        };
+    }
     
+    public static void controlBox(){
+        
+    }
+    
+    public static void detachBox(){
+        
+    }
+    
+    public static void printError(int number, String description) {
+        System.out.println("Error Event: " + Integer.toString(number) + " - "  + description); 
+    }
 }
